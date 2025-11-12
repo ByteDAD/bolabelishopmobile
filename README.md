@@ -208,6 +208,8 @@ Widget build(BuildContext context) {
 - Mengubah native code (iOS/Android)
 - Hot reload tidak memberikan hasil yang diharapkan
 
+</details>
+
 <details open>
 <summary><h2>📦 Tugas 8: Flutter Navigation, Layouts, Forms, and Input Elements</h2></summary>
 
@@ -417,7 +419,7 @@ Add product entry form and drawer navigation for Tugas 8
 - Update menu.dart with drawer integration
 - Add Navigator.push and pushReplacement
 ```
-
+</details>
 ---
 
 <div align="center">
