@@ -208,7 +208,215 @@ Widget build(BuildContext context) {
 - Mengubah native code (iOS/Android)
 - Hot reload tidak memberikan hasil yang diharapkan
 
+<details open>
+<summary><h2>📦 Tugas 8: Flutter Navigation, Layouts, Forms, and Input Elements</h2></summary>
 
+## Deskripsi Tugas
+Pada tugas ini, saya mengimplementasikan navigation, layout, form, dan form input elements pada aplikasi mobile Flutter bernama **bolabelishop**. Aplikasi ini dilengkapi dengan drawer navigation, form untuk menambah produk dengan validasi, serta integrasi navigasi yang konsisten di seluruh aplikasi.
+
+---
+
+## 📝 Jawaban Pertanyaan
+
+### 1. Jelaskan perbedaan antara Navigator.push() dan Navigator.pushReplacement() pada Flutter. Dalam kasus apa sebaiknya masing-masing digunakan pada aplikasi Football Shop kamu?
+
+**Navigator.push():**
+- Menambahkan halaman baru ke dalam stack navigasi
+- Halaman sebelumnya tetap berada di dalam stack
+- Menampilkan tombol back secara otomatis di AppBar
+- Memungkinkan user untuk kembali ke halaman sebelumnya
+
+**Navigator.pushReplacement():**
+- Mengganti halaman saat ini dengan halaman baru
+- Menghapus halaman sebelumnya dari stack
+- Tidak menampilkan tombol back
+- User tidak dapat kembali ke halaman sebelumnya
+
+**Penggunaan dalam aplikasi Football Shop:**
+
+Saya menggunakan **Navigator.push()** pada tombol "Create Product" di halaman utama:
+```dart
+if (item.name == "Create Product") {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const ProductEntryFormPage(),
+    ),
+  );
+}
+```
+Hal ini memungkinkan user untuk kembali ke halaman utama setelah selesai mengisi form atau membatalkan input.
+
+Saya menggunakan **Navigator.pushReplacement()** pada drawer menu:
+```dart
+Navigator.pushReplacement(
+  context,
+  MaterialPageRoute(
+    builder: (context) => MyHomePage(),
+  )
+);
+```
+Hal ini mencegah penumpukan halaman di stack saat navigasi melalui menu, sehingga lebih efisien dan mencegah user "terjebak" dalam loop navigasi.
+
+---
+
+### 2. Bagaimana kamu memanfaatkan hierarchy widget seperti Scaffold, AppBar, dan Drawer untuk membangun struktur halaman yang konsisten di seluruh aplikasi?
+
+Saya memanfaatkan **hierarchy widget** dengan cara berikut:
+
+**1. Scaffold sebagai struktur dasar**
+
+Scaffold digunakan di setiap halaman untuk menyediakan struktur konsisten:
+```dart
+return Scaffold(
+  appBar: AppBar(...),
+  drawer: const LeftDrawer(),
+  body: ...,
+);
+```
+
+**2. AppBar sebagai header konsisten**
+
+Setiap halaman memiliki AppBar dengan styling yang sama:
+- Warna background menggunakan `Theme.of(context).colorScheme.primary`
+- Text berwarna putih dengan font bold
+- Icon theme berwarna putih
+
+**3. Drawer sebagai menu navigasi konsisten**
+
+Saya membuat widget `LeftDrawer` yang dapat digunakan kembali di semua halaman:
+```dart
+class LeftDrawer extends StatelessWidget {
+  const LeftDrawer({super.key});
+  // ...
+}
+```
+
+Dengan menggunakan widget yang sama di setiap halaman, saya memastikan:
+- Navigasi selalu accessible dari manapun
+- Tampilan menu konsisten
+- Maintenance lebih mudah (update di satu tempat berlaku untuk semua halaman)
+
+---
+
+### 3. Dalam konteks desain antarmuka, apa kelebihan menggunakan layout widget seperti Padding, SingleChildScrollView, dan ListView saat menampilkan elemen-elemen form? Berikan contoh penggunaannya dari aplikasi kamu.
+
+**1. Padding**
+
+Memberikan spacing/jarak di sekitar widget untuk meningkatkan readability dan estetika:
+
+```dart
+Padding(
+  padding: const EdgeInsets.all(8.0),
+  child: TextFormField(
+    decoration: InputDecoration(
+      hintText: "Nama Produk",
+      labelText: "Nama Produk",
+      // ...
+    ),
+  ),
+),
+```
+
+Kelebihan: Membuat tampilan tidak cramped dan lebih mudah dibaca.
+
+**2. SingleChildScrollView**
+
+Memungkinkan konten untuk di-scroll jika melebihi ukuran layar:
+
+```dart
+body: Form(
+  key: _formKey,
+  child: SingleChildScrollView(
+    child: Column(
+      children: [
+        // Multiple input fields
+      ],
+    ),
+  ),
+)
+```
+
+Kelebihan:
+- Mencegah overflow error pada layar kecil
+- Form tetap accessible meski keyboard muncul
+- Semua field dapat diakses dengan scroll
+
+**3. ListView**
+
+Efficient rendering untuk list items dengan lazy loading:
+
+```dart
+Drawer(
+  child: ListView(
+    children: [
+      DrawerHeader(...),
+      ListTile(...),
+      ListTile(...),
+    ],
+  ),
+)
+```
+
+Kelebihan:
+- Performa baik untuk list panjang
+- Built-in scrolling behavior
+- Hanya render item yang visible di layar
+
+---
+
+### 4. Bagaimana kamu menyesuaikan warna tema agar aplikasi Football Shop memiliki identitas visual yang konsisten dengan brand toko?
+
+Saya menggunakan **Material Theme System** dengan mendefinisikan theme di `main.dart`:
+
+```dart
+theme: ThemeData(
+  colorScheme: ColorScheme.fromSwatch(
+    primarySwatch: Colors.deepPurple,
+  ).copyWith(secondary: Colors.deepPurple[400]),
+  useMaterial3: true,
+),
+```
+
+**Konsistensi tema diterapkan pada:**
+
+1. **AppBar**: Menggunakan `Theme.of(context).colorScheme.primary`
+2. **Drawer Header**: Menggunakan primary color untuk background
+3. **Button**: Menggunakan primary color untuk background
+4. **Card Colors**: Menggunakan warna semantic (blue, green, red) untuk membedakan jenis aksi
+
+**Keuntungan pendekatan ini:**
+- Warna konsisten di seluruh aplikasi
+- Mudah diubah dari satu tempat (centralized theme)
+- Otomatis diterapkan ke semua widget yang menggunakan theme
+- Memberikan identitas visual yang kuat dengan warna deepPurple sebagai brand color
+
+---
+
+### 5. Melakukan add, commit, dan push ke GitHub.
+
+Saya melakukan workflow Git standar untuk menyimpan progress:
+
+```bash
+# Menambahkan file ke staging area
+git add .
+
+# Commit dengan pesan yang deskriptif
+git commit -m "Add product entry form and drawer navigation for Tugas 8"
+
+# Push ke GitHub
+git push origin main
+```
+
+**Commit message yang digunakan:**
+```
+Add product entry form and drawer navigation for Tugas 8
+
+- Implement ProductEntryFormPage with validation
+- Create LeftDrawer widget for navigation
+- Update menu.dart with drawer integration
+- Add Navigator.push and pushReplacement
+```
 
 ---
 
