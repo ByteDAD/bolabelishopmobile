@@ -420,7 +420,7 @@ Add product entry form and drawer navigation for Tugas 8
 - Add Navigator.push and pushReplacement
 ```
 </details>
----
+
 <details open>
 <summary><h2>📦 Tugas 9: Integrasi Layanan Web Django dengan Aplikasi Flutter</h2></summary>
 
@@ -1885,10 +1885,8 @@ if (context.mounted) {
 }
 ```
 </details>
-```
----
 
-[View your file](computer:///mnt/user-data/outputs/TUGAS_9_README.md)
+
 <div align="center">
   <b>⚽ bolabelishop - Your Football Product Marketplace ⚽</b>
   <br>
