@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bolabelishopmobile/menu.dart';
 import 'package:bolabelishopmobile/screens/productentry_form.dart';
+import 'package:bolabelishopmobile/screens/list_productentry.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -17,7 +18,7 @@ class LeftDrawer extends StatelessWidget {
             child: const Column(
               children: [
                 Text(
-                  'bolabelishop',
+                  'BolaBelishop',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 24,
@@ -41,7 +42,6 @@ class LeftDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.home_outlined),
             title: const Text('Halaman Utama'),
-            // Bagian redirection ke MyHomePage
             onTap: () {
               Navigator.pushReplacement(
                   context,
@@ -53,12 +53,22 @@ class LeftDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.add_box),
             title: const Text('Tambah Produk'),
-            // Bagian redirection ke ProductEntryFormPage
             onTap: () {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const ProductEntryFormPage(),
+                  ));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.shopping_bag),
+            title: const Text('Daftar Produk'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ProductEntryPage(),
                   ));
             },
           ),
